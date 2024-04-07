@@ -32,12 +32,14 @@ void iterate(BranchMap parentBranchMap, pid_t parentPID, char parent)
 int main()
 {
     TreeMap treeMap;
-    treeMap.branchMap['a'].branchMap['b'].branchMap['e'];
-    treeMap.branchMap['a'].branchMap['c'];
-    treeMap.branchMap['a'].branchMap['d'].branchMap['g'];
-    treeMap.branchMap['a'].branchMap['b'].branchMap['f'].branchMap['h'];
-    treeMap.branchMap['a'].branchMap['b'].branchMap['f'].branchMap['i'].branchMap['j'];
+    treeMap.branchMap['b'].branchMap['e'];
+    treeMap.branchMap['c'];
+    treeMap.branchMap['d'].branchMap['g'];
+    treeMap.branchMap['b'].branchMap['f'].branchMap['h'];
+    treeMap.branchMap['b'].branchMap['f'].branchMap['i'].branchMap['j'];
 
-    iterate(treeMap.branchMap, getpid(), ' ');
+    iterate(treeMap.branchMap, getpid(), 'a');
+
+    std::cin.get(); // Wait for the user to press Enter
     return 0;
 }
