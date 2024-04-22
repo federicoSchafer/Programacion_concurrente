@@ -1,2 +1,5 @@
 #pragma once
-void printMatrix();
+
+void updateMatrixByThreads(int elementsPerThread);
+
+void updateMatrix();

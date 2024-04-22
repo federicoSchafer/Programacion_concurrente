@@ -1,14 +1,27 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <chrono>
 #include "fork.h"
 
-const int N = 2;
-const int threadCount = 500;
-int constant = 2;
+const int N = 80;
+const int threadCount = 4;
+const int constant = 20;
+const bool useThreads = true;
 std::vector<std::vector<int>> matrix(N, std::vector<int>(N));
+std::vector<std::vector<int>> matrixRes(N, std::vector<int>(N));
 
-void udpateMatrix(int initElement, int endElement)
+void updateMatrix()
+{
+    for (int i = 0; i < N; ++i)
+    {
+        for (int j = 0; j < N; ++j)
+        {
+            matrixRes[i][j] = matrix[i][j] * constant;
+        }
+    }
+}
+void udpateMatrixWithIndex(int initElement, int endElement)
 {
     for (int i = initElement; i < endElement; ++i)
     {
@@ -16,11 +29,32 @@ void udpateMatrix(int initElement, int endElement)
         int column = i % N;
         if (row < N && column < N)
         {
-            matrix[row][column] = matrix[row][column] * constant;
+            matrixRes[row][column] = matrix[row][column] * constant;
         }
     }
 }
-void printMatrix()
+void updateMatrixByThreads()
+{
+    int totalElements = N * N;
+    int elementsPerThread = (totalElements / threadCount) + totalElements % threadCount;
+
+    // run thread
+    std::vector<std::thread> threads;
+    int initElement = 0;
+    for (int i = 0; i < threadCount; ++i)
+    {
+        int endElement = initElement + elementsPerThread;
+        threads.push_back(std::thread(udpateMatrixWithIndex, initElement, endElement));
+        initElement = endElement;
+    }
+
+    // wait all threads
+    for (auto &thread : threads)
+    {
+        thread.join();
+    }
+}
+void printMatrix(std::vector<std::vector<int>> matrix)
 {
     for (int i = 0; i < N; ++i)
     {
@@ -42,29 +76,25 @@ int main()
             matrix[i][j] = rand() % 10;
         }
     }
-    std::cout << "Initial matrix:\n";
-    printMatrix();
-
-    int totalElements = N * N;
-    int elementsPerThread = (totalElements / threadCount) + totalElements % threadCount;
-
-    // run thread
-    std::vector<std::thread> threads;
-    int initElement = 0;
-    for (int i = 0; i < threadCount; ++i)
+    // initial time
+    auto start = std::chrono::high_resolution_clock::now();
+    if (useThreads)
     {
-        int endElement = initElement + elementsPerThread;
-        threads.push_back(std::thread(udpateMatrix, initElement, endElement));
-        initElement = endElement;
+        updateMatrixByThreads();
+    }
+    else
+    {
+        updateMatrix();
     }
 
-    // wait all threads
-    for (auto &thread : threads)
-    {
-        thread.join();
-    }
+    // end time
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
 
-    std::cout << "Updated matrix:\n";
-    printMatrix();
+    std::cout << "initial matrix:\n";
+    printMatrix(matrix);
+    std::cout << "updated matrix:\n";
+    printMatrix(matrixRes);
+    std::cout << "total time in seconds: " << duration.count() << "\n";
     return 0;
 }
