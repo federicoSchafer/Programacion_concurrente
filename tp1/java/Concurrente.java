@@ -1,93 +1,82 @@
-public class Concurrente implements Runnable
-{
-    /* Recursos comunes */
-    private int[][] rc;
+import java.time.Duration;
+import java.time.Instant;
+
+public class Concurrente 
+{   
+    private int numeroHilos;
     private int escalar;
+    private int filasPorHilo;
+    private int filasAdicionales;
+    private int[][] rc;
+    private long ultimaMedicion;
 
-    /* Recursos necesarios para calcular numero de filas contiguas */
-    private int hilos;
-    private int filaActual = 0;
-    private int cantidadFilasContiguas;
-    /* Recursos para el caso de una matriz 10 x 10 con 4 hilos, cuya division no es entera */
-    private boolean realizarEsfuerzoExtra;
-    private int hilosRestantes;
-    private final int cero = 0;
-    private final int uno = 1;
-
-
-    public Concurrente(int valorEscalar,int numeroHilos, int[][] matrizOriginal)
+    public Concurrente(int numeroHilos, int escalar,int[][] rc)
     {
-        escalar=valorEscalar;
-        hilos=numeroHilos;
-        if((double) matrizOriginal.length / hilos - matrizOriginal.length % hilos > cero)
-        {
-            realizarEsfuerzoExtra = true;
-            hilosRestantes = hilos;
-        }
-        cantidadFilasContiguas = matrizOriginal.length / hilos;
-        rc = new int[matrizOriginal.length][matrizOriginal.length];
-        /* Esto es para copiar la matriz en si, sin alterrar la matriz original */
-        for(int i=0;i<rc.length;i++)
-        {
-            for(int j=0;j<rc.length;j++)
-            {
-                rc[i][j] = matrizOriginal[i][j];
-            }
-        }
+        this.numeroHilos=numeroHilos;
+        this.escalar=escalar;
+        this.rc=rc;
+
+        filasPorHilo = this.rc.length / this.numeroHilos;
+        filasAdicionales = this.rc.length % this.numeroHilos;
     }
 
-    @Override
-    public void run()
+    public void arranque()
     {
-        calculoConcurrente();
-        if(realizarEsfuerzoExtra)
+        int filaInicial = 0,filaFinal;
+        HiloMultiplicadorDeMatriz[] threads = new HiloMultiplicadorDeMatriz[numeroHilos];
+        Instant inicio = Instant.now();
+        for (int i = 0; i < numeroHilos; i++) 
         {
-            hilosRestantes--;
+            filaFinal = filaInicial + filasPorHilo + (i < filasAdicionales ? 1 : 0);
+            threads[i] = new HiloMultiplicadorDeMatriz(filaInicial, filaFinal);
+            threads[i].start();
+            filaInicial = filaFinal;
         }
-    }
 
-    public synchronized void calculoConcurrente()
-    {
-        if(hilos == 1)
+        for (int i = 0; i < numeroHilos; i++) 
         {
-            for(int i=0;i<rc.length;i++)
+            try 
             {
-                for(int j=0;j<rc.length;j++)
-                {
-                    rc[i][j] = rc[i][j]*escalar;
-                }
-            }
-        }
-        else
-        {
-            int cantidadFilasRestantes = cantidadFilasContiguas;
-            while(filaActual < rc.length && cantidadFilasRestantes > 0)
-            {
-                for(int j=0;j<rc.length;j++)
-                {
-                    rc[filaActual][j] = rc[filaActual][j] * escalar;
-                }
-                filaActual++;
-                cantidadFilasRestantes--;
+                threads[i].join();
             } 
-
-            if(realizarEsfuerzoExtra && hilosRestantes == uno)
+            catch (InterruptedException e) 
             {
-                cantidadFilasRestantes = cantidadFilasContiguas;
-                while(filaActual < rc.length)
+                e.printStackTrace();
+            }
+        }
+        Instant fin = Instant.now();
+        long tiempoEmpleado = Duration.between(inicio, fin).toMillis();
+        ultimaMedicion = tiempoEmpleado;
+
+    }
+
+    public double obtenerUltimaMedicion()
+    {
+        return (double) ultimaMedicion;
+    }
+
+    private class HiloMultiplicadorDeMatriz extends Thread
+    {
+        private final int startRow;
+        private final int endRow;
+
+        public HiloMultiplicadorDeMatriz(int startRow, int endRow)
+        {
+            this.startRow = startRow;
+            this.endRow = endRow;
+        }
+
+        @Override
+        public void run()
+        {
+            for (int i = startRow; i < endRow; i++)
+            {
+                for (int j = 0; j < rc.length; j++)
                 {
-                    for(int j=0;j<rc.length;j++)
-                    {
-                        rc[filaActual][j] = rc[filaActual][j] * escalar;
-                    }
-                    filaActual++;
-                } 
+                    rc[i][j] *= escalar;
+                }
             }
         }
     }
 
-    public int[][] recuperarMatriz()
-    {
-        return rc;
-    }
 }

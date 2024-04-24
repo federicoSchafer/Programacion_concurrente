@@ -10,15 +10,7 @@ public class Secuencial
     public Secuencial(int valorEscalar, int[][] matrizOriginal)
     {
         escalar=valorEscalar;
-        rs = new int[matrizOriginal.length][matrizOriginal.length];
-        /* Esto es para copiar la matriz en si, sin alterrar la matriz original */
-        for(int i=0;i<rs.length;i++)
-        {
-            for(int j=0;j<rs.length;j++)
-            {
-                rs[i][j] = matrizOriginal[i][j];
-            }
-        }
+        rs = matrizOriginal;
     }
 
     public int[][] calculoSecuencial()

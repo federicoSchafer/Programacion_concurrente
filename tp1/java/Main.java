@@ -1,6 +1,3 @@
-import java.time.Duration;
-import java.time.Instant;
-
 public class Main 
 {
     /* Cotas */
@@ -8,14 +5,12 @@ public class Main
     private static final int cotaInferior = 0;
     private static int tamanioMatriz = 80;
     /* Recursos comunes a todos */
-    private static final int escalar = 2;
-    /* Recursos comunes a Main */
-    private static int[][] matrizOriginal = new int[tamanioMatriz][tamanioMatriz];
+    private static final int escalar = 1;
     /* Recursos para Hilos */
     private static final int numeroHilos=4; ////Puede ser 1, 2 o 4
     /* Recursos para comparar */
-    private static int[][] rs;
-    private static int[][] rc;
+    private static int[][] rs = new int[tamanioMatriz][tamanioMatriz];
+    private static int[][] rc = new int[tamanioMatriz][tamanioMatriz];
     /* Rondas de pruebas */
     private static int tamanioMuestraTesting = 30;
     private static double[] tiempoEmpleadoSecuencial = new double[tamanioMuestraTesting];
@@ -24,22 +19,22 @@ public class Main
 
     public static void main(String[] args) throws Exception 
     {
-        inicializarMatrizOriginal();
+        inicializarMatrices();
         inicializarSecuencial();
         inicializarCalculoConcurrente();
         verificarIgualdad();
         calcularPromedioDeEjecucion();
     }
 
-    
-
-    private static void inicializarMatrizOriginal()
+    private static void inicializarMatrices()
     {
-        for(int i=0;i<10;i++)
+        for(int i=0;i<tamanioMatriz;i++)
         {
-            for(int j=0;j<10;j++)
+            for(int j=0;j<tamanioMatriz;j++)
             {
-                matrizOriginal[i][j] = obtenerNumeroRandom();
+               int numero = obtenerNumeroRandom();
+               rs[i][j] = numero;
+               rc[i][j] = numero;
             }
         }
     }
@@ -52,36 +47,20 @@ public class Main
 
     private static void inicializarCalculoConcurrente()
     {
-        for(int pos=0;pos < tamanioMuestraTesting ; pos++)
+        for(int pos = 0 ; pos < tamanioMuestraTesting ; pos++)
         {
-            Concurrente cConcurrente = new Concurrente(escalar, numeroHilos, matrizOriginal);
-            Instant inicio = Instant.now();
-            for(int i=0;i<numeroHilos;i++)
-            {
-                Thread myThread = new Thread(cConcurrente);
-                myThread.start();
-                try 
-                {
-                    myThread.join();
-                } 
-                catch (InterruptedException e) 
-                {
-                    e.printStackTrace();
-                }
-            }
-            Instant fin = Instant.now();
-            long tiempoEmpleado = Duration.between(inicio, fin).toMillis();
-            tiempoEmpleadoConcurrente[pos] = (double) tiempoEmpleado;
-            rc = cConcurrente.recuperarMatriz();
+            Concurrente cConcurrente = new Concurrente(numeroHilos, escalar, rc);
+            cConcurrente.arranque();
+            tiempoEmpleadoConcurrente[pos] = cConcurrente.obtenerUltimaMedicion();
         }
     }
 
     private static void verificarIgualdad()
     {
         boolean sonIguales = true;
-        for(int i=0;i<matrizOriginal.length;i++)
+        for(int i=0;i<tamanioMatriz;i++)
         {
-            for(int j=0;j<matrizOriginal.length;j++)
+            for(int j=0;j<tamanioMatriz;j++)
             {
                 if(rs[i][j] != rc[i][j])
                 {
@@ -104,7 +83,7 @@ public class Main
     {
         for(int pos = 0 ; pos < tamanioMuestraTesting ; pos++)
         {
-            Secuencial cSecuencial = new Secuencial(escalar, matrizOriginal);
+            Secuencial cSecuencial = new Secuencial(escalar, rs);
             rs=cSecuencial.calculoSecuencial();
             tiempoEmpleadoSecuencial[pos] = cSecuencial.obtenerUltimaMedicion();
         }
@@ -124,5 +103,4 @@ public class Main
         System.out.println("El tiempo promedio de ejecucion para un calculo secuencial es de "+promedioSecuencial+" ms");
         System.out.println("El tiempo promedio de ejecucion para un calculo concurrente es de "+promedioConcurrente+" ms");
     }
-    
 }
