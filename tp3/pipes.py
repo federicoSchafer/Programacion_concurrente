@@ -1,5 +1,5 @@
+#!/usr/bin/env python3
 import os
-import sys
 from multiprocessing import Pipe
 
 FILE_PATH = 'ventas.txt'
@@ -59,8 +59,8 @@ def process_child(conn, sucursal):
 
 def main():
     
-    parent_conn1, child_conn1 = os.pipe()
-    parent_conn2, child_conn2 = os.pipe()
+    parent_conn1, child_conn1 = Pipe(False)
+    parent_conn2, child_conn2 = Pipe(False)
     
     process_b = os.fork()
     if process_b == CHILD:
