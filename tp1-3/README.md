@@ -1,4 +1,4 @@
 # Link Collab TP1-Parte3 - Comunicación y Concurrencia  
-Colab C++: https://colab.research.google.com/drive/12tc2zQjVtsfJ_C0hgowMR9fxlrKrR8xx?usp=sharing  
-Colab Python: https://colab.research.google.com/drive/1gcsjWsG1jmEehuWjreiNgOtnAqhV0him?usp=sharing  
-Colab Java: https://colab.research.google.com/drive/1T43JUMs0zzqxUtsvzqj8T6ZBwGe0sMws?usp=sharing
+Colab C++: https://colab.research.google.com/drive/19P2sadq1p8dR-TovmMbwQTO9wOFsRPql?usp=sharing  
+Colab Python: https://colab.research.google.com/drive/1N46d3ixNbebMFQpBLCn7XvhMwTGXfEYq?usp=sharing  
+Colab Java: https://colab.research.google.com/drive/1XsV--QTcwdAXEXmCehfQk3Mgj2doqiMJ?usp=sharing  

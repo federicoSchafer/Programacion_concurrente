@@ -8,6 +8,7 @@
 #include <mutex>
 #include <atomic>
 #include <cctype>
+#include <climits>
 
 std::map<std::string, int> mapaPalabras;
 std::mutex mutexMapa;
