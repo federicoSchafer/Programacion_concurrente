@@ -45,17 +45,13 @@ public class AutomatedBills {
 		{
 			threadList.get(i).join();
 		}
-		
-		
+
 		XlsxReader.write(excelPath, "hoja1", regisList);
-		fin = System.currentTimeMillis();	
-		
-		
+		fin = System.currentTimeMillis();
 		float segundos = (fin - inicio) / 1000;
 		
 		System.out.println("\n\n------------------------------------------------------------------------------");
 		
 		System.out.println("\nTiempo total para hacer "+ regisList.size() +" facturas: " + segundos + " segundos");
 	}
-
 }

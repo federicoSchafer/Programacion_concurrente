@@ -23,17 +23,20 @@ public class XlsxReader {
 		int rowCount = newSheet.getLastRowNum() - newSheet.getFirstRowNum();
 		ArrayList<Order> list = new ArrayList<Order>();
 		
-		for (int i = 1; i <= rowCount; i++) {
+		for (int i = 1; i <= rowCount; i++) 
+		{
 			XSSFRow row = newSheet.getRow(i);
 			Order regis = new Order();
 			regis.id = i;
 
 			int columnCount = 10;
-			for (int j = 0; j < columnCount; j++) {
+			for (int j = 0; j < columnCount; j++) 
+			{
 				DataFormatter formatter = new DataFormatter();
 				String data = formatter.formatCellValue(row.getCell(j));
 
-				switch(j) {
+				switch(j) 
+				{
 					case 0: 
 						regis.date = data;
 						break;
@@ -75,19 +78,24 @@ public class XlsxReader {
 		return list;
 	}
 	
-	public static void write(String filepath, String sheetname, ArrayList<Order> list ) throws IOException {
+	public static void write(String filepath, String sheetname, ArrayList<Order> list ) throws IOException 
+	{
 		File file = new File (filepath);
 		FileInputStream inputStream = new FileInputStream(file);
 		XSSFWorkbook newWorkBook = new XSSFWorkbook(inputStream);
 		XSSFSheet newSheet = newWorkBook.getSheet(sheetname);
 
 		
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++) 
+		{
 			Order order = list.get(i);
 			XSSFCell cell= newSheet.getRow(order.id).createCell(9);
-			if(order.status == true) {
+			if(order.status == true) 
+			{
 				cell.setCellValue("PROCESADO");
-			} else {
+			} 
+			else 
+			{
 				cell.setCellValue("ERROR");
 			}
 		}
