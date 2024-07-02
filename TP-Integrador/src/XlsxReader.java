@@ -29,11 +29,11 @@ public class XlsxReader {
 
 	final static String msgProcesado="PROCESADO";
 	final static String msgError="ERROR";
+	final static String strEspacio=" ";
+	final static String comma=",";
+	final static String dot=".";
 
-	final static char comma=",";
-	final static char dot=".";
-
-	
+	final static boolean FALSE=false;
 	public static ArrayList<Order> read(String filepath, String sheetname) throws IOException{
 		File file = new File (filepath);
 		FileInputStream inputStream = new FileInputStream(file);
@@ -61,13 +61,13 @@ public class XlsxReader {
 						regis.date = data;
 						break;
 					case one: 
-						regis.pointOfSale = " " + data;
+						regis.pointOfSale = strEspacio + data;
 						break;
 					case two: 
 						regis.type = data;
 						break;
 					case three: 
-						regis.ivaCondition = " " + data;
+						regis.ivaCondition = strEspacio + data;
 						break;
 					case four: 
 						regis.typeDoc = data;
@@ -82,10 +82,10 @@ public class XlsxReader {
 						regis.bonus = data;
 						break;
 					case eight: 
-						regis.iva = " " + data;
+						regis.iva = strEspacio + data;
 						break;
 					case nine: 
-						regis.status = false;
+						regis.status = FALSE;
 						break;
 					default: 	
 						break;	
