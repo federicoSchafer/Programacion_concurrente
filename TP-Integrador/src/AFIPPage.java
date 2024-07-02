@@ -110,7 +110,7 @@ public class AFIPPage extends Thread
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		for(int i=0 ; i<numbOfOrders; i++)
+		for(int i=zero ; i<numbOfOrders; i++)
 		{
 			Order r;
 			synchronized (this)
