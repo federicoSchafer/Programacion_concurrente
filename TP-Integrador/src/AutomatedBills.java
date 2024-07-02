@@ -16,6 +16,14 @@ public class AutomatedBills {
 	static String chromeDriverPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\chromeDriver\\chromedriver.exe";
 	static int CANT_HILOS = 3;
 	static String afipURL = "https://auth.afip.gob.ar/contribuyente_/login.xhtml";
+	static String strHoja1 = "hoja1";
+	static int one = 1;
+	static int thousand = 1000;
+
+	static final String separador = "\n\n------------------------------------------------------------------------------";
+	static final String tiempoTotal = "\nTiempo total para hacer ";
+	static final String facturas = " facturas: ";
+	static final String segundos = " segundos";
 
 	public static void main(String[] args) throws IOException, InterruptedException 
 	{
@@ -23,7 +31,7 @@ public class AutomatedBills {
 		regis = new RegistroExcel();		
 		ArrayList<Order> regisList = new ArrayList<Order>();
 		
-		regisList=XlsxReader.read(excelPath, "hoja1");
+		regisList=XlsxReader.read(excelPath, strHoja1);
 		
 		int cantRegis = regisList.size()/CANT_HILOS;
 		int resto = regisList.size()%CANT_HILOS;
@@ -31,7 +39,7 @@ public class AutomatedBills {
 		inicio = System.currentTimeMillis();
 		//creo n-1 hilos
 		int i;
-		for(i=0; i < CANT_HILOS - 1; i++)
+		for(i=0; i < CANT_HILOS - one; i++)
 		{
 			threadList.add(new AFIPPage(chromeDriverPath, afipURL, regisList, cantRegis*i, cantRegis));
 			threadList.get(i).start();
@@ -46,12 +54,12 @@ public class AutomatedBills {
 			threadList.get(i).join();
 		}
 
-		XlsxReader.write(excelPath, "hoja1", regisList);
+		XlsxReader.write(excelPath, strHoja1, regisList);
 		fin = System.currentTimeMillis();
-		float segundos = (fin - inicio) / 1000;
+		float segundos = (fin - inicio) / thousand;
 		
-		System.out.println("\n\n------------------------------------------------------------------------------");
+		System.out.println(separador);
 		
-		System.out.println("\nTiempo total para hacer "+ regisList.size() +" facturas: " + segundos + " segundos");
+		System.out.println(tiempoTotal+ regisList.size() +facturas + segundos + segundos);
 	}
 }

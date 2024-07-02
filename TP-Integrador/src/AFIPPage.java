@@ -25,6 +25,62 @@ public class AFIPPage extends Thread
 	ArrayList<Order> regisList;
 	int orderIni;
 	int numbOfOrders;
+	final static String urlMenuPrincipal = "https://fe.afip.gob.ar/rcel/jsp/menu_ppal.jsp";
+	final static String webDriverChrome = "webdriver.chrome.driver";
+
+	final static String strcuilLocator = "F1:username";
+	final static String strsiguienteBtnLocator = "F1:btnSiguiente";
+	final static String strcontrasenaLocator = "F1:password";
+	final static String stringresarBtnLocator = "F1:btnIngresar";
+	final static String strpageLocator1 = "//img[@src = 'frameworkAFIP/v1/img/logo_afip.png']";
+	final static String strmisServiciosLocator = "//*[@id=\"root\"]/div/main/section[1]/div/ul/li[3]";
+	final static String strcomprobantesEnLineaLocator = "//*[@id=\"serviciosMasUtilizados\"]/div/div/div/div[1]/a/div/h3";
+
+	final static String strguPaKaBtnLocator = "//*[@id=\"contenido\"]/form/table/tbody/tr[4]/td/input[2]";
+	final static String strgenerComprBtnLocator = "btn_gen_cmp";
+	final static String strcerrarBtnLocator = "novolveramostrar";
+	final static String strpuntVentTextLocator = "//*[@id=\"contenido\"]/form/div/div/table/tbody/tr[1]/th";
+	final static String strddlPtoVentLocator = "puntodeventa";
+	final static String strddlTipoComprLocator = "universocomprobante";
+	final static String strcontinuarBtnLocator = "//*[@id=\"contenido\"]/form/input[2]";
+
+	final static String strfechaLocator = "fc";
+	final static String strconceptoLocator = "idconcepto";
+
+	final static String strcondFrentIVALocator = "idivareceptor";
+	final static String strtipoDocLocator = "idtipodocreceptor";
+	final static String strdniLocator = "nrodocreceptor";
+	final static String strnombreLocator = "razonsocialreceptor";
+	final static String strcontadoCheckLocator = "formadepago1";
+	final static String strcontinuarBtn2Locator = "//*[@id=\"formulario\"]/input[2]";
+
+	final static String strdescripcionLocator = "detalle_descripcion1";
+	final static String strprecioLocator = "detalle_precio1";
+	final static String stralicIVALocator = "detalle_tipo_iva1";
+	final static String strcontinuarBtn3Locator = "//*[@id=\"contenido\"]/form/input[8]";
+
+	final static String strconfirmarBtnLocator = "btngenerar";
+	final static String strcomprGeneradTextLocator = "//*[@id=\"botones_comprobante\"]/b";
+	final static String strmenuBtnLocator = "//*[@id=\"contenido\"]/table/tbody/tr[2]/td/input";
+
+
+	final static String strError0="Error ";
+	final static String strError1="Error 1 ";
+	final static String strError2="Error 2 ";
+	final static String strError3="Error 3 ";
+	final static String strError4="Error 4 ";
+
+
+	final static int zero = 0;
+	final static int one = 1;
+	final static int oneHundred = 100;
+	final static int oneThousand = 1000;
+	final static int fiveHundred = 500;
+	final static int fiveThounsand = 5000;
+
+	final static String strProductos = "Productos";
+	final static String strPuntoDeVenta = "Punto de Ventas a utilizar";
+
 	
 	public AFIPPage(String location, String url, ArrayList<Order> regisList, int ini, int numb) 
 	{
@@ -32,7 +88,7 @@ public class AFIPPage extends Thread
 		this.regisList = regisList;
 		this.orderIni = ini;
 		this.numbOfOrders = numb;
-		System.setProperty("webdriver.chrome.driver", location);
+		System.setProperty(webDriverChrome, location);
 		ChromeOptions options=new ChromeOptions();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
@@ -69,7 +125,7 @@ public class AFIPPage extends Thread
 				regisList.get(orderIni + i).status = res;
 				regisList.get(orderIni + i).print();
 			}
-			visit("https://fe.afip.gob.ar/rcel/jsp/menu_ppal.jsp");
+			visit(urlMenuPrincipal);
 		}
 		
 		quit();
@@ -164,47 +220,47 @@ public class AFIPPage extends Thread
 	}
 	
 	
-	By cuilLocator = By.id("F1:username");
-	By siguienteBtnLocator = By.id("F1:btnSiguiente");
-	By contrasenaLocator = By.id("F1:password");
-	By ingresarBtnLocator = By.id("F1:btnIngresar");
+	By cuilLocator = By.id(strcuilLocator);
+	By siguienteBtnLocator = By.id(strsiguienteBtnLocator);
+	By contrasenaLocator = By.id(strcontrasenaLocator);
+	By ingresarBtnLocator = By.id(stringresarBtnLocator);
 	
-	By pageLocator1 = By.xpath("//img[@src = 'frameworkAFIP/v1/img/logo_afip.png']");
-	By misServiciosLocator = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div/ul/li[3]");
-	By comprobantesEnLineaLocator = By.xpath("//*[@id=\"serviciosMasUtilizados\"]/div/div/div/div[1]/a/div/h3");
+	By pageLocator1 = By.xpath(strpageLocator1);
+	By misServiciosLocator = By.xpath(strmisServiciosLocator);
+	By comprobantesEnLineaLocator = By.xpath(strcomprobantesEnLineaLocator);
 	
 	
 	//novolveramostrar
 	
-	By guPaKaBtnLocator = By.xpath("//*[@id=\"contenido\"]/form/table/tbody/tr[4]/td/input[2]");
-	By generComprBtnLocator = By.id("btn_gen_cmp");
-	By cerrarBtnLocator = By.id("novolveramostrar");
-	By puntVentTextLocator = By.xpath("//*[@id=\"contenido\"]/form/div/div/table/tbody/tr[1]/th");
-	By ddlPtoVentLocator = By.id("puntodeventa");
-	By ddlTipoComprLocator = By.id("universocomprobante");
-	By continuarBtnLocator = By.xpath("//*[@id=\"contenido\"]/form/input[2]");
+	By guPaKaBtnLocator = By.xpath(strguPaKaBtnLocator);
+	By generComprBtnLocator = By.id(strgenerComprBtnLocator);
+	By cerrarBtnLocator = By.id(strcerrarBtnLocator);
+	By puntVentTextLocator = By.xpath(strpuntVentTextLocator);
+	By ddlPtoVentLocator = By.id(strddlPtoVentLocator);
+	By ddlTipoComprLocator = By.id(strddlTipoComprLocator);
+	By continuarBtnLocator = By.xpath(strcontinuarBtnLocator);
 	
-	By fechaLocator = By.id("fc");
-	By conceptoLocator = By.id("idconcepto");
-	
-	
-	By condFrentIVALocator = By.id("idivareceptor");
-	By tipoDocLocator = By.id("idtipodocreceptor");
-	By dniLocator = By.id("nrodocreceptor");
-	By nombreLocator = By.id("razonsocialreceptor");
-	By contadoCheckLocator = By.id("formadepago1");
-	By continuarBtn2Locator = By.xpath("//*[@id=\"formulario\"]/input[2]");
+	By fechaLocator = By.id(strfechaLocator);
+	By conceptoLocator = By.id(strconceptoLocator);
 	
 	
+	By condFrentIVALocator = By.id(strcondFrentIVALocator);
+	By tipoDocLocator = By.id(strtipoDocLocator);
+	By dniLocator = By.id(strdniLocator);
+	By nombreLocator = By.id(strnombreLocator);
+	By contadoCheckLocator = By.id(strcontadoCheckLocator);
+	By continuarBtn2Locator = By.xpath(strcontinuarBtn2Locator);
 	
-	By descripcionLocator = By.id("detalle_descripcion1");
-	By precioLocator = By.id("detalle_precio1");
-	By alicIVALocator = By.id("detalle_tipo_iva1");
-	By continuarBtn3Locator = By.xpath("//*[@id=\"contenido\"]/form/input[8]");
 	
-	By confirmarBtnLocator = By.id("btngenerar");
-	By comprGeneradTextLocator = By.xpath("//*[@id=\"botones_comprobante\"]/b");
-	By menuBtnLocator = By.xpath("//*[@id=\"contenido\"]/table/tbody/tr[2]/td/input");
+	
+	By descripcionLocator = By.id(strdescripcionLocator);
+	By precioLocator = By.id(strprecioLocator);
+	By alicIVALocator = By.id(stralicIVALocator);
+	By continuarBtn3Locator = By.xpath(strcontinuarBtn3Locator);
+	
+	By confirmarBtnLocator = By.id(strconfirmarBtnLocator);
+	By comprGeneradTextLocator = By.xpath(strcomprGeneradTextLocator);
+	By menuBtnLocator = By.xpath(strmenuBtnLocator);
 	
 
 	
@@ -225,7 +281,7 @@ public class AFIPPage extends Thread
 		}
 		catch (org.openqa.selenium.TimeoutException e) 
 		{
-			System.out.print("Error"+ e.getMessage());
+			System.out.print(strError0+ e.getMessage());
 		}	
 	}
 		
@@ -240,14 +296,14 @@ public class AFIPPage extends Thread
 		{
 			ewait.until(ExpectedConditions.presenceOfElementLocated(comprobantesEnLineaLocator));
 			click(comprobantesEnLineaLocator);
-			Thread.sleep(5000);
+			Thread.sleep(fiveThounsand);
 			ArrayList<String> tabs = getWindowHandles();
-			switchToWindow(tabs, 1);
+			switchToWindow(tabs, one);
 			click(guPaKaBtnLocator);
 		}
 		catch (org.openqa.selenium.TimeoutException e) 
 		{
-			System.out.println("Error"+ e.getMessage());	
+			System.out.println(strError0+ e.getMessage());	
 		}
 	}
 	
@@ -261,9 +317,9 @@ public class AFIPPage extends Thread
 		{
 			ewait.until(ExpectedConditions.elementToBeClickable(generComprBtnLocator));
 			click(generComprBtnLocator);
-			ewait.until(ExpectedConditions.textToBe(puntVentTextLocator, "Punto de Ventas a utilizar"));
+			ewait.until(ExpectedConditions.textToBe(puntVentTextLocator, strPuntoDeVenta));
 			dropDownList(ddlPtoVentLocator, regis.pointOfSale);
-			Thread.sleep(500);
+			Thread.sleep(fiveHundred);
 			dropDownList(ddlTipoComprLocator, regis.type);
 			
 			if(i == 0) 
@@ -275,7 +331,7 @@ public class AFIPPage extends Thread
 			ewait.until(ExpectedConditions.elementToBeClickable(fechaLocator));
 			String s=regis.date;
 			type(s,fechaLocator);
-			dropDownList(conceptoLocator," Productos");
+			dropDownList(conceptoLocator,strProductos);
 			click(continuarBtnLocator);
 			ewait.until(ExpectedConditions.elementToBeClickable(condFrentIVALocator));
 			dropDownList(condFrentIVALocator, regis.ivaCondition);
@@ -284,7 +340,7 @@ public class AFIPPage extends Thread
 			type(regis.numDoc, dniLocator);
 			
 			click(contadoCheckLocator);
-			Thread.sleep(100);
+			Thread.sleep(oneHundred);
 			click(continuarBtn2Locator);
 			ewait.until(ExpectedConditions.elementToBeClickable(descripcionLocator));
 			type(DESCRIPTION, descripcionLocator);
@@ -294,33 +350,33 @@ public class AFIPPage extends Thread
 
 			click(continuarBtn3Locator);
 
-			Thread.sleep(1000);
+			Thread.sleep(oneThousand);
 		} 
 		catch (org.openqa.selenium.TimeoutException e) 
 		{
-			System.out.println("Error"+ e.getMessage());
+			System.out.println(strError1+ e.getMessage());
 			return false;
 		}
 		catch (InterruptedException e) 
 		{
-			System.out.println("Error2: "+ e.getMessage());
+			System.out.println(strError2+ e.getMessage());
 			return false;
 		}
 		catch (org.openqa.selenium.NoSuchElementException e) 
 		{
-			System.out.println("Error3: "+ e.getMessage());
+			System.out.println(strError3+ e.getMessage());
 			regis.print();
 			return false;
 		}
 		catch (org.openqa.selenium.ElementClickInterceptedException e) 
 		{
-			System.out.println("Error4: "+ e.getMessage());
+			System.out.println(strError4+ e.getMessage());
 			regis.print();
 			return false;
 		}
 		catch (org.openqa.selenium.UnhandledAlertException e) 
 		{
-			System.out.println("Error4: "+ e.getMessage());
+			System.out.println(strError4+ e.getMessage());
 			regis.print();
 			return false;
 		}

@@ -15,6 +15,22 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class XlsxReader {
 	public XlsxReader() {}
 	
+	final static int zero=0;
+	final static int one=1;
+	final static int two=2;
+	final static int three=3;
+	final static int four=4;
+	final static int five=5;
+	final static int six=6;
+	final static int seven=7;
+	final static int eight=8;
+	final static int nine=9;
+	final static int ten=10
+
+	final static String msgProcesado="PROCESADO"
+	final static String msgError="ERROR"
+
+	
 	public static ArrayList<Order> read(String filepath, String sheetname) throws IOException{
 		File file = new File (filepath);
 		FileInputStream inputStream = new FileInputStream(file);
@@ -22,6 +38,7 @@ public class XlsxReader {
 		XSSFSheet newSheet = newWorkBook.getSheet(sheetname);
 		int rowCount = newSheet.getLastRowNum() - newSheet.getFirstRowNum();
 		ArrayList<Order> list = new ArrayList<Order>();
+
 		
 		for (int i = 1; i <= rowCount; i++) 
 		{
@@ -29,7 +46,7 @@ public class XlsxReader {
 			Order regis = new Order();
 			regis.id = i;
 
-			int columnCount = 10;
+			int columnCount = ten;
 			for (int j = 0; j < columnCount; j++) 
 			{
 				DataFormatter formatter = new DataFormatter();
@@ -37,34 +54,34 @@ public class XlsxReader {
 
 				switch(j) 
 				{
-					case 0: 
+					case zero: 
 						regis.date = data;
 						break;
-					case 1: 
+					case one: 
 						regis.pointOfSale = " " + data;
 						break;
-					case 2: 
+					case two: 
 						regis.type = data;
 						break;
-					case 3: 
+					case three: 
 						regis.ivaCondition = " " + data;
 						break;
-					case 4: 
+					case four: 
 						regis.typeDoc = data;
 						break;
-					case 5: 
+					case five: 
 						regis.numDoc = data;
 						break;
-					case 6: 
+					case six: 
 						regis.price = data;
 						break;
-					case 7: 
+					case seven: 
 						regis.bonus = data;
 						break;
-					case 8: 
+					case eight: 
 						regis.iva = " " + data;
 						break;
-					case 9: 
+					case nine: 
 						regis.status = false;
 						break;
 					default: 	
@@ -92,11 +109,11 @@ public class XlsxReader {
 			XSSFCell cell= newSheet.getRow(order.id).createCell(9);
 			if(order.status == true) 
 			{
-				cell.setCellValue("PROCESADO");
+				cell.setCellValue(msgProcesado);
 			} 
 			else 
 			{
-				cell.setCellValue("ERROR");
+				cell.setCellValue(msgError);
 			}
 		}
 		inputStream.close();
