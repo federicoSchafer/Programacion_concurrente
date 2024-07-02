@@ -301,7 +301,7 @@ public class AFIPPage extends Thread
 			Thread.sleep(fiveHundred);
 			dropDownList(ddlTipoComprLocator, regis.type);
 			
-			if(i == 0) 
+			if(i == zero) 
 			{
 				ewait.until(ExpectedConditions.elementToBeClickable(cerrarBtnLocator));
 				click(cerrarBtnLocator);
