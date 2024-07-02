@@ -49,16 +49,22 @@ public class AutomatedBills {
 		
 		
 		int cantRegis = regisList.size()/CANT_HILOS;
+		int resto = regisList.size()%CANT_HILOS;
 	
 		inicio = System.currentTimeMillis();
-		
-		for(int i=0; i< CANT_HILOS; i++)
+		//creo n-1 hilos
+		int i;
+		for(i=0; i < CANT_HILOS - 1; i++)
 		{
 			threadList.add(new AFIPPage(chromeDriverPath, afipURL, regisList, cantRegis*i, cantRegis));
 			threadList.get(i).start();
 		}
+		//creo el hilo faltante sumandole la cantidad de registros sobrantes 
+		//en caso de que regisList.size()/CANT_HILOS no de un numero entero
+		threadList.add(new AFIPPage(chromeDriverPath, afipURL, regisList, cantRegis*i, cantRegis + resto));
+		threadList.get(i).start();
 		
-		for(int i=0; i< CANT_HILOS; i++)
+		for(i=0; i< CANT_HILOS; i++)
 		{
 			threadList.get(i).join();
 		}
