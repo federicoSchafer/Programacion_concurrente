@@ -25,6 +25,8 @@ public class AFIPPage extends Thread
 	ArrayList<Order> regisList;
 	int orderIni;
 	int numbOfOrders;
+
+	//Constantes para Selenium
 	final static String urlMenuPrincipal = "https://fe.afip.gob.ar/rcel/jsp/menu_ppal.jsp";
 	final static String webDriverChrome = "webdriver.chrome.driver";
 
@@ -62,14 +64,13 @@ public class AFIPPage extends Thread
 	final static String strconfirmarBtnLocator = "btngenerar";
 	final static String strcomprGeneradTextLocator = "//*[@id=\"botones_comprobante\"]/b";
 	final static String strmenuBtnLocator = "//*[@id=\"contenido\"]/table/tbody/tr[2]/td/input";
-
-
+	
+	//Constantes
 	final static String strError0="Error ";
 	final static String strError1="Error 1 ";
 	final static String strError2="Error 2 ";
 	final static String strError3="Error 3 ";
 	final static String strError4="Error 4 ";
-
 
 	final static int zero = 0;
 	final static int one = 1;
@@ -108,10 +109,7 @@ public class AFIPPage extends Thread
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
-		
+		}	
 		for(int i=0 ; i<numbOfOrders; i++)
 		{
 			Order r;
@@ -127,7 +125,6 @@ public class AFIPPage extends Thread
 			}
 			visit(urlMenuPrincipal);
 		}
-		
 		quit();
 	}
 	
@@ -219,7 +216,7 @@ public class AFIPPage extends Thread
 		return getText(selectList.getFirstSelectedOption());
 	}
 	
-	
+	//Selenium
 	By cuilLocator = By.id(strcuilLocator);
 	By siguienteBtnLocator = By.id(strsiguienteBtnLocator);
 	By contrasenaLocator = By.id(strcontrasenaLocator);
@@ -228,9 +225,6 @@ public class AFIPPage extends Thread
 	By pageLocator1 = By.xpath(strpageLocator1);
 	By misServiciosLocator = By.xpath(strmisServiciosLocator);
 	By comprobantesEnLineaLocator = By.xpath(strcomprobantesEnLineaLocator);
-	
-	
-	//novolveramostrar
 	
 	By guPaKaBtnLocator = By.xpath(strguPaKaBtnLocator);
 	By generComprBtnLocator = By.id(strgenerComprBtnLocator);
@@ -243,15 +237,12 @@ public class AFIPPage extends Thread
 	By fechaLocator = By.id(strfechaLocator);
 	By conceptoLocator = By.id(strconceptoLocator);
 	
-	
 	By condFrentIVALocator = By.id(strcondFrentIVALocator);
 	By tipoDocLocator = By.id(strtipoDocLocator);
 	By dniLocator = By.id(strdniLocator);
 	By nombreLocator = By.id(strnombreLocator);
 	By contadoCheckLocator = By.id(strcontadoCheckLocator);
 	By continuarBtn2Locator = By.xpath(strcontinuarBtn2Locator);
-	
-	
 	
 	By descripcionLocator = By.id(strdescripcionLocator);
 	By precioLocator = By.id(strprecioLocator);
@@ -261,11 +252,6 @@ public class AFIPPage extends Thread
 	By confirmarBtnLocator = By.id(strconfirmarBtnLocator);
 	By comprGeneradTextLocator = By.xpath(strcomprGeneradTextLocator);
 	By menuBtnLocator = By.xpath(strmenuBtnLocator);
-	
-
-	
-
-	
 	
 	public void singIn(String cuil, String contra)
 	{
@@ -284,11 +270,7 @@ public class AFIPPage extends Thread
 			System.out.print(strError0+ e.getMessage());
 		}	
 	}
-		
-			
-	
-	
-	
+
 	public void clickOnComprobantes() throws InterruptedException 
 	{	
 		WebDriverWait ewait= newWait();
@@ -306,9 +288,6 @@ public class AFIPPage extends Thread
 			System.out.println(strError0+ e.getMessage());	
 		}
 	}
-	
-	
-	
 
 	public boolean hacerFactura(int i, Order regis)
 	{
@@ -382,8 +361,7 @@ public class AFIPPage extends Thread
 		}
 		return true;
 	}
-	
-	
+		
 	public void quit()
 	{
 		driver.quit();

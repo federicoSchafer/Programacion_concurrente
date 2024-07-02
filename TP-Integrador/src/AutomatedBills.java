@@ -15,8 +15,12 @@ public class AutomatedBills {
 	static String excelPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\excel\\FacturasAT.xlsx";
 	static String chromeDriverPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\chromeDriver\\chromedriver.exe";
 	static int CANT_HILOS = 3;
+
+	//Constantes para Selenium
 	static String afipURL = "https://auth.afip.gob.ar/contribuyente_/login.xhtml";
 	static String strHoja1 = "hoja1";
+	
+	//Constantes
 	static int one = 1;
 	static int thousand = 1000;
 

@@ -25,10 +25,13 @@ public class XlsxReader {
 	final static int seven=7;
 	final static int eight=8;
 	final static int nine=9;
-	final static int ten=10
+	final static int ten=10;
 
-	final static String msgProcesado="PROCESADO"
-	final static String msgError="ERROR"
+	final static String msgProcesado="PROCESADO";
+	final static String msgError="ERROR";
+
+	final static char comma=",";
+	final static char dot=".";
 
 	
 	public static ArrayList<Order> read(String filepath, String sheetname) throws IOException{
@@ -88,7 +91,7 @@ public class XlsxReader {
 						break;	
 				}
 			}
-			regis.price=regis.price.replace(',', '.');
+			regis.price=regis.price.replace(comma, dot);
 			list.add(regis);
 		}
 		newWorkBook.close();
