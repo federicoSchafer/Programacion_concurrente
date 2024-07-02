@@ -31,12 +31,4 @@ public class Order {
 			status
 		);
 	}
-	
-//	public boolean priceMoreThanMaxWithoutDni()
-//	{
-//		if(Float.valueOf(price)>=MAX_PRICE)
-//			return true;
-//		else
-//			return false;
-//	}
 }

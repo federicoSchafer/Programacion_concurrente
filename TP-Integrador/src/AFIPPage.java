@@ -22,34 +22,22 @@ public class AFIPPage extends Thread {
 	
 	private WebDriver driver;
 	private String url;
-	//private ArrayList<Order> subList;
 	ArrayList<Order> regisList;
 	int orderIni;
 	int numbOfOrders;
 	
-	//public AFIPPage(String location, String url, ArrayList<Order> regisList, List<Order> subList) 
 	public AFIPPage(String location, String url, ArrayList<Order> regisList, int ini, int numb) 
 	{
 		this.url = url;
 		this.regisList = regisList;
-		//this.subList = new ArrayList<Order> (subList);
 		this.orderIni = ini;
 		this.numbOfOrders = numb;
 		System.setProperty("webdriver.chrome.driver", location);
 		ChromeOptions options=new ChromeOptions();
-        //options.addArguments("headless");
-        
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
 	}
-	
-//	driver.manage().getCookieNamed("ASP.NET_SessionId");
-//    driver.manage().addCookie(driverClone.manage().getCookieNamed("ASP.NET_SessionId"));
-	
-	
-	
-	
-	
+		
 	@Override
 	public void run() 
 	{
@@ -84,19 +72,6 @@ public class AFIPPage extends Thread {
 			visit("https://fe.afip.gob.ar/rcel/jsp/menu_ppal.jsp");
 		}
 		
-//		for(int i=0 ; i<this.subList.size(); i++)
-//		{
-//			
-//			boolean res = hacerFactura(i, subList.get(i));
-//			synchronized (this) 
-//			{
-//				regisList.get(subList.get(i).id-1).status = res;
-//				regisList.get(subList.get(i).id-1).print();
-//			}
-//			
-//			
-//			visit("https://fe.afip.gob.ar/rcel/jsp/menu_ppal.jsp");
-//		}
 		quit();
 	}
 	
@@ -193,7 +168,6 @@ public class AFIPPage extends Thread {
 	
 	By pageLocator1 = By.xpath("//img[@src = 'frameworkAFIP/v1/img/logo_afip.png']");
 	By misServiciosLocator = By.xpath("//*[@id=\"root\"]/div/main/section[1]/div/ul/li[3]");
-	//By comprobantesEnLineaLocator = By.xpath("//*[@id=\"root\"]/div/main/div[2]/section[2]/div/div/div[11]");
 	By comprobantesEnLineaLocator = By.xpath("//*[@id=\"serviciosMasUtilizados\"]/div/div/div/div[1]/a/div/h3");
 	
 	
@@ -261,8 +235,6 @@ public class AFIPPage extends Thread {
 		
 		WebDriverWait ewait= newWait();
 		try {
-			//ewait.until(ExpectedConditions.presenceOfElementLocated(pageLocator1));
-			//click(misServiciosLocator);
 			ewait.until(ExpectedConditions.presenceOfElementLocated(comprobantesEnLineaLocator));
 			click(comprobantesEnLineaLocator);
 			Thread.sleep(5000);
@@ -282,7 +254,6 @@ public class AFIPPage extends Thread {
 	public boolean hacerFactura(int i, Order regis)
 	{
 		WebDriverWait ewait= newWait();
-		//System.out.print(regis.id+1 + " || ");
 		try {
 			ewait.until(ExpectedConditions.elementToBeClickable(generComprBtnLocator));
 			click(generComprBtnLocator);
@@ -313,17 +284,12 @@ public class AFIPPage extends Thread {
 			ewait.until(ExpectedConditions.elementToBeClickable(descripcionLocator));
 			type(DESCRIPTION, descripcionLocator);
 			type(regis.price, precioLocator);
-			//regis.print();
+
 			dropDownList(alicIVALocator, regis.iva);
-			
-			//Thread.sleep(5000);
 
 			click(continuarBtn3Locator);
-			//ewait.until(ExpectedConditions.elementToBeClickable(confirmarBtnLocator));
+
 			Thread.sleep(1000);
-			//click(confirmarBtnLocator);
-			//AcceptAlert();
-			//ewait.until(ExpectedConditions.textToBe(comprGeneradTextLocator, "Comprobante Generado"));
 		} 
 		catch (org.openqa.selenium.TimeoutException e) 
 		{
