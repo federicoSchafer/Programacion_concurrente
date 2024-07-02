@@ -14,20 +14,21 @@ public class Order {
 	public String bonus;
 	public String iva;
 	public Boolean status = false;
+	private String strSeperador = " || ";
 
 	public Order() {}
 
 	public void print() {
 		System.out.println(
-			date + " || " +
-			pointOfSale + " || " +
-			type + " || " +
-			ivaCondition + " || " +
-			typeDoc + " || " +
-			numDoc + " || " +
-			price + " || " +
-			bonus + " || " +
-			iva + " || " +
+			date + strSeperador +
+			pointOfSale + strSeperador +
+			type + strSeperador +
+			ivaCondition + strSeperador +
+			typeDoc + strSeperador +
+			numDoc + strSeperador +
+			price + strSeperador +
+			bonus + strSeperador +
+			iva + strSeperador +
 			status
 		);
 	}
