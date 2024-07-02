@@ -71,6 +71,8 @@ public class AFIPPage extends Thread
 	final static String strError2="Error 2 ";
 	final static String strError3="Error 3 ";
 	final static String strError4="Error 4 ";
+	final static String strProductos = "Productos";
+	final static String strPuntoDeVenta = "Punto de Ventas a utilizar";
 
 	final static int zero = 0;
 	final static int one = 1;
@@ -79,10 +81,8 @@ public class AFIPPage extends Thread
 	final static int fiveHundred = 500;
 	final static int fiveThounsand = 5000;
 
-	final static String strProductos = "Productos";
-	final static String strPuntoDeVenta = "Punto de Ventas a utilizar";
-
-	
+	final static boolean TRUE=true;
+	final static boolean FALSE=false;
 	public AFIPPage(String location, String url, ArrayList<Order> regisList, int ini, int numb) 
 	{
 		this.url = url;
@@ -334,32 +334,32 @@ public class AFIPPage extends Thread
 		catch (org.openqa.selenium.TimeoutException e) 
 		{
 			System.out.println(strError1+ e.getMessage());
-			return false;
+			return FALSE;
 		}
 		catch (InterruptedException e) 
 		{
 			System.out.println(strError2+ e.getMessage());
-			return false;
+			return FALSE;
 		}
 		catch (org.openqa.selenium.NoSuchElementException e) 
 		{
 			System.out.println(strError3+ e.getMessage());
 			regis.print();
-			return false;
+			return FALSE;
 		}
 		catch (org.openqa.selenium.ElementClickInterceptedException e) 
 		{
 			System.out.println(strError4+ e.getMessage());
 			regis.print();
-			return false;
+			return FALSE;
 		}
 		catch (org.openqa.selenium.UnhandledAlertException e) 
 		{
 			System.out.println(strError4+ e.getMessage());
 			regis.print();
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 		
 	public void quit()
