@@ -156,9 +156,9 @@ public class AFIPPage extends Thread
 		{
 			Order r = regisList.get(orderIni + i);
 			regisList.get(orderIni + i).status = hacerFactura(i, r);
-			synchronized (this) 
+			synchronized (reader) 
 			{
-				regisList.get(orderIni + i).print();
+				r.print();
 				try 
 				{
 					reader.writeOrder(r);
