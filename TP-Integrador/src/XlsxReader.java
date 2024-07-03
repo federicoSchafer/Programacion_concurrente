@@ -96,7 +96,6 @@ public class XlsxReader {
 						break;	
 				}
 			}
-			regis.price=regis.price.replace(comma, dot);
 			list.add(regis);
 		}
 		return list;
