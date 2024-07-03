@@ -1,4 +1,3 @@
-
 public class User {
 	
 	public String cuil;

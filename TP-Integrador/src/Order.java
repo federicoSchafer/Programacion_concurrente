@@ -1,5 +1,3 @@
-
-
 public class Order {
 	
 	public static final float MAX_PRICE = 80000;
