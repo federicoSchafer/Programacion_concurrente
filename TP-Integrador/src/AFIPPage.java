@@ -71,7 +71,7 @@ public class AFIPPage extends Thread
 	final static String strError2="Error 2 ";
 	final static String strError3="Error 3 ";
 	final static String strError4="Error 4 ";
-	final static String strProductos = "Productos";
+	final static String strProductos = " Productos";
 	final static String strPuntoDeVenta = "Punto de Ventas a utilizar";
 
 	final static int zero = 0;
@@ -83,6 +83,7 @@ public class AFIPPage extends Thread
 
 	final static boolean TRUE=true;
 	final static boolean FALSE=false;
+	
 	public AFIPPage(String location, String url, ArrayList<Order> regisList, int ini, int numb) 
 	{
 		this.url = url;
@@ -324,12 +325,13 @@ public class AFIPPage extends Thread
 			ewait.until(ExpectedConditions.elementToBeClickable(descripcionLocator));
 			type(DESCRIPTION, descripcionLocator);
 			type(regis.price, precioLocator);
-
 			dropDownList(alicIVALocator, regis.iva);
-
 			click(continuarBtn3Locator);
-
+			//ewait.until(ExpectedConditions.elementToBeClickable(confirmarBtnLocator));
 			Thread.sleep(oneThousand);
+            //click(confirmarBtnLocator);
+            //AcceptAlert();
+            //ewait.until(ExpectedConditions.textToBe(comprGeneradTextLocator, "Comprobante Generado"));
 		} 
 		catch (org.openqa.selenium.TimeoutException e) 
 		{

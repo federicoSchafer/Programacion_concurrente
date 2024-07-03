@@ -32,8 +32,10 @@ public class XlsxReader {
 	final static String strEspacio=" ";
 	final static String comma=",";
 	final static String dot=".";
-
+	
 	final static boolean FALSE=false;
+	final static boolean TRUE = true;
+	
 	public static ArrayList<Order> read(String filepath, String sheetname) throws IOException{
 		File file = new File (filepath);
 		FileInputStream inputStream = new FileInputStream(file);
@@ -110,7 +112,7 @@ public class XlsxReader {
 		{
 			Order order = list.get(i);
 			XSSFCell cell= newSheet.getRow(order.id).createCell(9);
-			if(order.status == true) 
+			if(order.status == TRUE) 
 			{
 				cell.setCellValue(msgProcesado);
 			} 

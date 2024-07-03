@@ -7,20 +7,20 @@ import java.util.List;
 public class AutomatedBills {
 	
 	static AFIPPage afipPage;
-	static RegistroExcel regis;
 	static ArrayList<String> list;
 	static ArrayList<AFIPPage> threadList = new ArrayList<AFIPPage>();
 	static long inicio;
 	static long fin;
-	static String excelPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\excel\\FacturasAT.xlsx";
-	static String chromeDriverPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\chromeDriver\\chromedriver.exe";
-	static int CANT_HILOS = 3;
+	static String excelPath = "C:\\Users\\npompeo\\Documents\\GitHub\\Programacion_concurrente\\TP-Integrador\\resources\\excel\\FacturasAT.xlsx";
+	static String chromeDriverPath = "C:\\Users\\npompeo\\Documents\\GitHub\\Programacion_concurrente\\TP-Integrador\\resources\\chromeDriver\\chromedriver.exe";
+	static int CANT_HILOS = 1;
 
 	//Constantes para Selenium
 	static String afipURL = "https://auth.afip.gob.ar/contribuyente_/login.xhtml";
 	static String strHoja1 = "hoja1";
 	
 	//Constantes
+	static int zero = 0;
 	static int one = 1;
 	static int thousand = 1000;
 
@@ -31,19 +31,16 @@ public class AutomatedBills {
 
 	public static void main(String[] args) throws IOException, InterruptedException 
 	{
-		//inicializo
-		regis = new RegistroExcel();		
+		//inicializo		
 		ArrayList<Order> regisList = new ArrayList<Order>();
-		
 		regisList=XlsxReader.read(excelPath, strHoja1);
-		
 		int cantRegis = regisList.size()/CANT_HILOS;
 		int resto = regisList.size()%CANT_HILOS;
 	
 		inicio = System.currentTimeMillis();
 		//creo n-1 hilos
 		int i;
-		for(i=0; i < CANT_HILOS - one; i++)
+		for(i=zero; i < CANT_HILOS - one; i++)
 		{
 			threadList.add(new AFIPPage(chromeDriverPath, afipURL, regisList, cantRegis*i, cantRegis));
 			threadList.get(i).start();
