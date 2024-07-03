@@ -1,4 +1,5 @@
 
+
 public class Order {
 	
 	public static final float MAX_PRICE = 80000;
@@ -20,6 +21,7 @@ public class Order {
 
 	public void print() {
 		System.out.println(
+			id + strSeperador +
 			date + strSeperador +
 			pointOfSale + strSeperador +
 			type + strSeperador +

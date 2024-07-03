@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +11,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XlsxReader {
+	
+	
+	private static  File file;
+	private static  FileInputStream inputStream;
+	private static  XSSFWorkbook newWorkBook;
+	private static  XSSFSheet newSheet;
+	
+	
 	public XlsxReader() {}
 	
 	final static int zero=0;
@@ -36,11 +42,8 @@ public class XlsxReader {
 	final static boolean FALSE=false;
 	final static boolean TRUE = true;
 	
-	public static ArrayList<Order> read(String filepath, String sheetname) throws IOException{
-		File file = new File (filepath);
-		FileInputStream inputStream = new FileInputStream(file);
-		XSSFWorkbook newWorkBook = new XSSFWorkbook(inputStream);
-		XSSFSheet newSheet = newWorkBook.getSheet(sheetname);
+	public ArrayList<Order> read() throws IOException
+	{	
 		int rowCount = newSheet.getLastRowNum() - newSheet.getFirstRowNum();
 		ArrayList<Order> list = new ArrayList<Order>();
 
@@ -96,35 +99,40 @@ public class XlsxReader {
 			regis.price=regis.price.replace(comma, dot);
 			list.add(regis);
 		}
-		newWorkBook.close();
 		return list;
 	}
 	
-	public static void write(String filepath, String sheetname, ArrayList<Order> list ) throws IOException 
+	public void open(String filepath, String sheetname) throws IOException 
 	{
-		File file = new File (filepath);
-		FileInputStream inputStream = new FileInputStream(file);
-		XSSFWorkbook newWorkBook = new XSSFWorkbook(inputStream);
-		XSSFSheet newSheet = newWorkBook.getSheet(sheetname);
-
-		
-		for (int i = 0; i < list.size(); i++) 
-		{
-			Order order = list.get(i);
-			XSSFCell cell= newSheet.getRow(order.id).createCell(9);
-			if(order.status == TRUE) 
-			{
-				cell.setCellValue(msgProcesado);
-			} 
-			else 
-			{
-				cell.setCellValue(msgError);
-			}
-		}
+		file = new File (filepath);
+		inputStream = new FileInputStream(file);
+		newWorkBook = new XSSFWorkbook(inputStream);
+		newSheet = newWorkBook.getSheet(sheetname);
+	}
+	
+	public void close() throws IOException
+	{
 		inputStream.close();
+		newWorkBook.close();
+	}
+	
+	public void writeOrder(Order order) throws IOException 
+	{
+		XSSFCell cell= newSheet.getRow(order.id).createCell(9);
+		if(order.status == TRUE) 
+		{
+			cell.setCellValue(msgProcesado);
+		} 
+		else 
+		{
+			cell.setCellValue(msgError);
+		}
 		FileOutputStream outpustream = new FileOutputStream(file);
 		newWorkBook.write(outpustream);
 		outpustream.close();
-		newWorkBook.close();
 	}
+	
+	
+	
+	
 }

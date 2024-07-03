@@ -1,13 +1,17 @@
 
-public class User 
-{
-	static String cuil;
-	static String password;
+public class User {
 	
-	public User() 
+	public String cuil;
+	public String password;
+	
+	
+	public User(String cuil, String password) 
 	{
-		this.cuil="";
-		this.password="";
+		this.cuil = cuil;
+		this.password = password;
 	}
+	
+	
+	
 
 }
