@@ -2,9 +2,6 @@ import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-
-
 public class AutomatedBills {
 	
 	static AFIPPage afipPage;
@@ -12,8 +9,8 @@ public class AutomatedBills {
 	static ArrayList<AFIPPage> threadList = new ArrayList<AFIPPage>();
 	static long inicio;
 	static long fin;
-	static String excelPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\excel\\FacturasAT.xlsx";
-	static String chromeDriverPath = "C:\\Users\\tomas\\eclipse-workspace-2024\\PruebaAutomatizacion\\resources\\chromeDriver\\chromedriver.exe";
+	static String excelPath = "C:\\Users\\npompeo\\Documents\\GitHub\\Programacion_concurrente\\TP-Integrador\\resources\\excel\\FacturasAT.xlsx";
+	static String chromeDriverPath = "C:\\Users\\npompeo\\Documents\\GitHub\\Programacion_concurrente\\TP-Integrador\\resources\\chromeDriver\\chromedriver.exe";
 
 	//Constantes para Selenium
 	static String afipURL = "https://auth.afip.gob.ar/contribuyente_/login.xhtml";
@@ -49,9 +46,6 @@ public class AutomatedBills {
         
         String hilos = console.readLine("Ingrese la cantidad de hilos a ejecutar: ");
         int cantHilos = Integer.parseInt(hilos);
-        
-//        User user = new User("", "");
-//        int cantHilos = 2;
 
         XlsxReader reader = new XlsxReader();
         reader.open(excelPath, sheetname);

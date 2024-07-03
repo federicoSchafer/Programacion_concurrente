@@ -10,8 +10,4 @@ public class User {
 		this.cuil = cuil;
 		this.password = password;
 	}
-	
-	
-	
-
 }
